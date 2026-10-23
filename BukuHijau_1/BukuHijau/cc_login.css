@@ -1,0 +1,210 @@
+:root {
+  --green-900: #0b5d3a;
+  --green-700: #0a7d4f;
+  --green-600: #0e8a58;
+  --green-100: #e3f4ea;
+  --ink: #1d2b24;
+  --muted: #6b7c74;
+  --line: #dbe8e0;
+  --field-bg: #eef6f1;
+  --error: #c62828;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  background: linear-gradient(135deg, #f4fbf6 0%, #e4f5ea 55%, #d6efde 100%);
+}
+
+/* daun dekoratif kanan atas & kiri bawah */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(135deg, #bfe3c9, #8cc9a0);
+  border-radius: 0 100% 0 100%;
+  opacity: .55;
+  z-index: 0;
+}
+body::before { top: 28px; right: 70px; width: 70px; height: 70px; transform: rotate(-10deg); }
+body::after  { bottom: 40px; left: 36%; width: 90px; height: 90px; transform: rotate(20deg); opacity: .25; }
+
+/* ===== LAYOUT 2 KOLOM ===== */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  padding: 32px 6vw;
+}
+
+/* ===== KIRI: BRANDING ===== */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.logo {
+  width: 230px;
+  max-width: 100%;
+  height: auto;
+}
+.tagline {
+  margin: 8px 0 14px;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--green-700);
+  letter-spacing: .02em;
+}
+.desc {
+  margin: 0;
+  font-size: .9rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.gambar {
+  width: 300px;
+  max-width: 80%;
+  height: auto;
+  margin-top: 28px;
+}
+
+/* ===== KANAN: KARTU FORM ===== */
+.card {
+  justify-self: center;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 36px 32px 28px;
+  box-shadow: 0 12px 40px rgba(14, 90, 58, .12);
+}
+.card h1 {
+  margin: 0 0 6px;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--green-900);
+}
+.sub {
+  margin: 0 0 22px;
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.field { margin-bottom: 16px; }
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.input-wrap { position: relative; }
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 42px 12px 14px;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  background: var(--field-bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: .9rem;
+  transition: border-color .15s, background .15s;
+}
+input::placeholder { color: #9bb0a5; }
+input:focus {
+  outline: none;
+  border-color: var(--green-600);
+  background: #fff;
+}
+
+.icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  fill: none;
+  stroke: var(--green-600);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.error {
+  margin: 4px 0 0;
+  min-height: 0;
+  font-size: .78rem;
+  color: var(--error);
+}
+.error:empty { display: none; }
+
+.button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--green-700);
+  color: #fff;
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+}
+.button:hover { background: var(--green-900); }
+.button:focus-visible { outline: 3px solid #9bd8b4; outline-offset: 2px; }
+
+.success {
+  display: none;               /* tampilkan lewat JS: success.style.display = "block" */
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--green-100);
+  color: var(--green-900);
+  font-size: .85rem;
+}
+
+.login {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: .8rem;
+  color: var(--muted);
+}
+.login a {
+  color: var(--green-700);
+  font-weight: 700;
+  text-decoration: none;
+}
+.login a:hover { text-decoration: underline; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 860px) {
+  .page {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 16px;
+  }
+  .logo { width: 170px; }
+  .gambar { display: none; }
+  body::before, body::after { display: none; }
+}

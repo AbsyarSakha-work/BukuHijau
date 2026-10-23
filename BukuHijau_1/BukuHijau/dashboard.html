@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BukuHijau</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark">♧</div>
+          <div>
+            <div class="brand-name">BukuHijau</div>
+            <small>Perpustakaan Digital</small>
+          </div>
+        </div>
+        <div class="nav-label">Menu utama</div>
+        <a href="dashboard.html" class="nav-link active">▦ <span>Dashboard</span></a>
+        <a href="daftar-buku.html" class="nav-link">▤ <span>Daftar Buku</span></a>
+        <a href="peminjaman.html" class="nav-link">↗ <span>Peminjaman Buku</span></a>
+        <a href="pengembalian.html" class="nav-link">↙ <span>Pengembalian</span></a>
+        <a href="riwayat.html" class="nav-link">◷ <span>Riwayat Peminjaman</span></a>
+        <div class="nav-label">Administrasi</div>
+        <a href="kelola-buku.html" class="nav-link">⚙ <span>Kelola Buku</span></a>
+        <a href="kelola-anggota.html" class="nav-link">♙ <span>Kelola Anggota</span></a>
+        <a href="rekap.html" class="nav-link">▥ <span>Rekap Peminjaman</span></a>
+        <div class="sidebar-bottom">
+          <strong>Perpustakaan Kelas</strong>
+          Kelola buku dan nikmati pengalaman membaca.
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+          <div class="crumb">BukuHijau <span>/</span> <strong id="breadcrumb">Dashboard</strong></div>
+          <div class="top-actions">
+            <span class="online-label"><i></i>Online</span>
+            <div class="avatar">A</div>
+            <div class="user-meta">
+              <strong>Admin Perpustakaan</strong>
+              <small>Administrator</small>
+            </div>
+            <button class="icon-btn" id="profileBtn" aria-label="Menu profil">⌄</button>
+            <div class="profile-pop hidden" id="profilePop">
+              <a href="dashboard.html" class="pop-link">Dashboard</a>
+              <button id="aboutBtn">Tentang BukuHijau</button>
+              <button id="resetBtn">Reset data contoh</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="page active" id="page-dashboard" data-title="Dashboard">
+            <div class="page-heading">
+              <div>
+                <h1>Dashboard</h1>
+                <p>Selamat datang kembali! Berikut ringkasan perpustakaan hari ini.</p>
+              </div>
+              <a class="btn btn-primary" href="peminjaman.html">＋ Pinjam Buku</a>
+            </div>
+            <div class="stats">
+              <div class="stat-card">
+                <div class="stat-icon">▤</div>
+                <div class="stat-label">Total Judul Buku</div>
+                <div class="stat-value" id="stTitles">0</div>
+                <div class="stat-note">Judul koleksi</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">▥</div>
+                <div class="stat-label">Stok Tersedia</div>
+                <div class="stat-value" id="stStock">0</div>
+                <div class="stat-note">Eksemplar di rak</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">↗</div>
+                <div class="stat-label">Sedang Dipinjam</div>
+                <div class="stat-value" id="stActive">0</div>
+                <div class="stat-note" id="stActiveNote">Transaksi aktif</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">♙</div>
+                <div class="stat-label">Total Anggota</div>
+                <div class="stat-value" id="stMembers">0</div>
+                <div class="stat-note">Anggota terdaftar</div>
+              </div>
+            </div>
+            <div class="grid-main">
+              <section class="panel">
+                <div class="panel-head">
+                  <h2>Buku Favorit</h2>
+                  <a class="text-btn" href="daftar-buku.html">Lihat semua →</a>
+                </div>
+                <div class="book-grid" id="favGrid"></div>
+              </section>
+              <section class="panel">
+                <div class="panel-head">
+                  <h2>Aktivitas Terbaru</h2>
+                  <span class="muted">Terbaru</span>
+                </div>
+                <div class="activity-list" id="activityList"></div>
+              </section>
+            </div>
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Peminjaman Terbaru</h2>
+                <a class="text-btn" href="riwayat.html">Lihat riwayat →</a>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>ANGGOTA</th><th>BUKU</th><th>TANGGAL PINJAM</th><th>BATAS KEMBALI</th><th>STATUS</th></tr>
+                  </thead>
+                  <tbody id="recentBody"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal informasi / konfirmasi -->
+    <div class="modal-backdrop hidden" id="modal">
+      <div class="modal">
+        <button class="modal-close" id="modalClose" aria-label="Tutup">×</button>
+        <div class="modal-icon">♧</div>
+        <h2 id="modalTitle">Informasi</h2>
+        <p id="modalText"></p>
+        <div class="modal-actions">
+          <button class="btn btn-outline hidden" id="modalCancel">Batal</button>
+          <button class="btn btn-primary" id="modalOk">Mengerti</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal formulir (tambah/ubah) -->
+    <div class="modal-backdrop hidden" id="formModal">
+      <div class="modal form-modal">
+        <button class="modal-close" id="formClose" aria-label="Tutup">×</button>
+        <h2 id="formTitle">Formulir</h2>
+        <form id="modalForm" novalidate>
+          <div class="form-grid" id="formFields"></div>
+          <div class="form-error" id="formError" role="alert"></div>
+          <div class="modal-actions">
+            <button class="btn btn-outline" type="button" id="formCancel">Batal</button>
+            <button class="btn btn-primary" type="submit" id="formSubmit">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+    <script src="script.js"></script>
+  </body>
+</html>

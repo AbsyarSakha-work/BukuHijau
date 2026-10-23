@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman Buku - BukuHijau</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark">♧</div>
+          <div>
+            <div class="brand-name">BukuHijau</div>
+            <small>Perpustakaan Digital</small>
+          </div>
+        </div>
+        <div class="nav-label">Menu utama</div>
+        <a href="dashboard.html" class="nav-link">▦ <span>Dashboard</span></a>
+        <a href="daftar-buku.html" class="nav-link">▤ <span>Daftar Buku</span></a>
+        <a href="peminjaman.html" class="nav-link active">↗ <span>Peminjaman Buku</span></a>
+        <a href="pengembalian.html" class="nav-link">↙ <span>Pengembalian</span></a>
+        <a href="riwayat.html" class="nav-link">◷ <span>Riwayat Peminjaman</span></a>
+        <div class="nav-label">Administrasi</div>
+        <a href="kelola-buku.html" class="nav-link">⚙ <span>Kelola Buku</span></a>
+        <a href="kelola-anggota.html" class="nav-link">♙ <span>Kelola Anggota</span></a>
+        <a href="rekap.html" class="nav-link">▥ <span>Rekap Peminjaman</span></a>
+        <div class="sidebar-bottom">
+          <strong>Perpustakaan Kelas</strong>
+          Kelola buku dan nikmati pengalaman membaca.
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+          <div class="crumb">BukuHijau <span>/</span> <strong id="breadcrumb">Peminjaman Buku</strong></div>
+          <div class="top-actions">
+            <span class="online-label"><i></i>Online</span>
+            <div class="avatar">A</div>
+            <div class="user-meta">
+              <strong>Admin Perpustakaan</strong>
+              <small>Administrator</small>
+            </div>
+            <button class="icon-btn" id="profileBtn" aria-label="Menu profil">⌄</button>
+            <div class="profile-pop hidden" id="profilePop">
+              <a href="dashboard.html" class="pop-link">Dashboard</a>
+              <button id="aboutBtn">Tentang BukuHijau</button>
+              <button id="resetBtn">Reset data contoh</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="page active" id="page-loan" data-title="Peminjaman Buku">
+            <div class="page-heading">
+              <div>
+                <h1>Peminjaman Buku</h1>
+                <p>Isi formulir berikut untuk mencatat peminjaman buku.</p>
+              </div>
+            </div>
+            <div class="form-layout">
+              <section class="panel">
+                <div class="panel-head">
+                  <h2>Formulir Peminjaman</h2>
+                  <span class="badge">Formulir</span>
+                </div>
+                <form id="loanForm" novalidate>
+                  <div class="form-grid">
+                    <div class="field full">
+                      <label for="loanMember">Nama anggota</label>
+                      <select id="loanMember"></select>
+                    </div>
+                    <div class="field full">
+                      <label for="loanBook">Pilih buku</label>
+                      <select id="loanBook"></select>
+                      <small class="field-hint" id="loanStockInfo">Pilih buku untuk melihat stok.</small>
+                    </div>
+                    <div class="field">
+                      <label for="loanDate">Tanggal pinjam</label>
+                      <input type="date" id="loanDate">
+                    </div>
+                    <div class="field">
+                      <label for="loanDuration">Durasi</label>
+                      <select id="loanDuration">
+                        <option value="7">7 hari</option>
+                        <option value="3">3 hari</option>
+                        <option value="14">14 hari</option>
+                      </select>
+                    </div>
+                    <div class="field full">
+                      <label for="loanDue">Tanggal pengembalian</label>
+                      <input type="date" id="loanDue">
+                    </div>
+                  </div>
+                  <div class="form-error" id="loanError" role="alert"></div>
+                  <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">✓ Simpan Peminjaman</button>
+                    <button class="btn btn-outline" type="reset" id="loanReset">Reset</button>
+                  </div>
+                </form>
+              </section>
+              <aside class="illustration">
+                <div class="plant">♧</div>
+                <h3>Mulai petualangan membaca</h3>
+                <p>Pilih buku favoritmu dan nikmati pengetahuan baru. Jangan lupa mengembalikannya tepat waktu, ya!</p>
+                <div class="notice">ℹ Maksimal durasi peminjaman adalah 14 hari. Buku dengan stok 0 tidak dapat dipinjam.</div>
+              </aside>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal informasi / konfirmasi -->
+    <div class="modal-backdrop hidden" id="modal">
+      <div class="modal">
+        <button class="modal-close" id="modalClose" aria-label="Tutup">×</button>
+        <div class="modal-icon">♧</div>
+        <h2 id="modalTitle">Informasi</h2>
+        <p id="modalText"></p>
+        <div class="modal-actions">
+          <button class="btn btn-outline hidden" id="modalCancel">Batal</button>
+          <button class="btn btn-primary" id="modalOk">Mengerti</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal formulir (tambah/ubah) -->
+    <div class="modal-backdrop hidden" id="formModal">
+      <div class="modal form-modal">
+        <button class="modal-close" id="formClose" aria-label="Tutup">×</button>
+        <h2 id="formTitle">Formulir</h2>
+        <form id="modalForm" novalidate>
+          <div class="form-grid" id="formFields"></div>
+          <div class="form-error" id="formError" role="alert"></div>
+          <div class="modal-actions">
+            <button class="btn btn-outline" type="button" id="formCancel">Batal</button>
+            <button class="btn btn-primary" type="submit" id="formSubmit">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
